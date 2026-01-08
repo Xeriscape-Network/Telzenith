@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rules | Telzenith Survival</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4ade80;
+            --bg-dark: #000000;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: #f8fafc;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        h1, h2, h3 { font-family: 'Lexend', sans-serif; }
+
+        /* Background Logic from Landing Page */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: black;
+        }
+
+        .bg-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.9) 100%),
+                radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);
+        }
+
+        .rule-card {
+            background: linear-gradient(145deg, rgba(15, 15, 15, 0.7) 0%, rgba(5, 5, 5, 0.85) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .rule-card:hover {
+            border-color: rgba(74, 222, 128, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -20px rgba(0,0,0,0.7);
+        }
+
+        .status-pill {
+            background: rgba(255, 255, 255, 0.05);
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            position: sticky;
+            top: 90px;
+            z-index: 10;
+        }
+
+        .section-title {
+            color: #ffffff;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(4px);
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .section-number {
+            background: rgba(255, 255, 255, 0.05);
+            color: #4ade80;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Lexend', sans-serif;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+
+        .section-divider {
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.2), transparent);
+        }
+
+        nav {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        code {
+            font-family: 'Lexend', monospace;
+            background: rgba(255,255,255,0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #4ade80;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Image Layers -->
+    <div class="bg-container">
+        <div id="bg-layer-1" class="bg-layer opacity-100"></div>
+        <div id="bg-layer-2" class="bg-layer opacity-0"></div>
+    </div>
+    <div class="bg-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-2xl font-black tracking-tighter hover:text-green-400 transition-colors">
+                TEL<span class="text-green-400">ZENITH</span>
+            </a>
+            <div class="flex gap-8 items-center">
+                <a href="/" class="text-sm font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Home</a>
+                <a href="https://discord.xeriscape.network" class="text-sm font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">Discord</a>
+                <a href="https://telzenith.xyz/wiki" class="bg-white/5 hover:bg-white/10 px-5 py-2 rounded-xl text-xs font-black transition-all border border-white/10 uppercase tracking-widest">Wiki</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Updated Header -->
+    <header class="max-w-5xl mx-auto px-6 pt-32 pb-24 text-center">
+        <!-- Main Branding -->
+        <h1 class="text-7xl md:text-9xl font-black mb-4 tracking-tighter text-white">
+            TEL<span class="text-green-400">ZENITH</span>
+        </h1>
+        <!-- Subheading Badge/Label -->
+        <div class="flex items-center justify-center gap-3 mb-10">
+            <div class="h-px w-8 bg-white/20"></div>
+            <h2 class="text-lg md:text-xl font-bold uppercase tracking-[0.3em] text-slate-300">
+                Server Rules
+            </h2>
+            <div class="h-px w-8 bg-white/20"></div>
+        </div>
+
+        <div class="max-w-xl mx-auto pt-4 border-t border-white/5">
+            <p class="text-slate-400 text-sm md:text-base font-medium leading-relaxed">
+                The following rules apply to the Telzenith server environment, which aims to foster an inclusive community where all players can find something to enjoy.
+                <span class="block mt-2 text-slate-500 text-xs italic">
+                    For community-wide policies across the network, please refer to the
+                    <a href="https://xeriscape.network/guidelines" class="text-white hover:text-green-400 underline decoration-green-400/30 underline-offset-4 transition-colors">Xeriscape Guidelines</a>.
+                    <br class="mb-2">
+                    A mirror of these rules is also available in the <a href="https://telzenith.xyz/wiki/guidelines" class="text-white hover:text-green-400 underline decoration-green-400/30 underline-offset-4 transition-colors">server documentation</a> as a backup.
+                </span>
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 pb-48 space-y-32">
+
+        <!-- Section: Social & Conduct -->
+        <section>
+            <div class="section-header">
+                <div class="section-title">
+                    <span class="section-number">01</span> Player Conduct
+                </div>
+                <div class="section-divider"></div>
+            </div>
+            <div class="grid gap-8">
+                <!-- Main Conduct Rule -->
+                <div class="rule-card p-10 rounded-[2.5rem]">
+                    <h3 class="text-2xl font-bold text-white mb-4">Respect & Stability</h3>
+                    <p class="text-slate-400 leading-relaxed font-medium">
+                        Respect the server and your fellow players. This includes treating others with courtesy, avoiding harassment, and refraining from any conduct that would create a hostile or unpleasant environment. We expect all members to maintain a high standard of sportsmanship and maturity.
+                    </p>
+                </div>
+
+                <!-- Fraud & Scamming -->
+                <div class="rule-card p-10 rounded-[2.5rem]">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.5)]"></span>
+                        <h3 class="text-xl font-bold text-white">Fraud & Deception</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Scamming other players out of their items, currency, or progress is not permitted. This includes fraudulent trades, "betting" schemes without payout, or using social engineering to steal assets. Telzenith is a community, not an anarchy environment.
+                    </p>
+                    <div class="flex flex-wrap gap-x-6 gap-y-2 text-[10px] font-black text-slate-500 uppercase tracking-widest italic opacity-70">
+                        <span>• No Trade Scams</span>
+                        <span>• No Trust Trapping</span>
+                        <span>• No Deceptive Auctions</span>
+                    </div>
+                </div>
+
+                <!-- Integrity Rule -->
+                <div class="rule-card p-10 rounded-[2.5rem] border-l-4 border-l-yellow-500/40">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="w-2 h-2 rounded-full bg-yellow-500 shadow-[0_0_10px_rgba(234,179,8,0.5)]"></span>
+                        <h3 class="text-xl font-bold text-white">Server Integrity</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Players should not make a deliberate effort to damage the server's stability, infrastructure, or performance, nor intentionally hinder the legitimate gameplay experience of others. Any attempt to degrade the network services will be met with immediate administrative action.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Technical & Automation -->
+        <section>
+            <div class="section-header">
+                <div class="section-title">
+                    <span class="section-number">02</span> Automation & Exploits
+                </div>
+                <div class="section-divider"></div>
+            </div>
+            <div class="grid gap-8">
+                <div class="rule-card p-10 rounded-[2.5rem]">
+                    <span class="status-pill px-3 py-1 text-[10px] font-black uppercase mb-6 inline-block">Gameplay Automation</span>
+                    <h3 class="text-2xl font-bold text-white mb-4">Forbidden Modifications</h3>
+                    <p class="text-slate-400 leading-relaxed mb-6">
+                        Players are strictly forbidden from automating gameplay through any means, including the use of client-side automation tools such as <strong>Baritone</strong>. This includes bypassing the server's idle timeout mechanism, whether the method is built into the game or relies on a modification.
+                    </p>
+
+                    <div class="mb-8 p-4 rounded-xl bg-green-500/5 border border-green-500/10 flex items-center justify-between group">
+                        <p class="text-xs font-semibold text-slate-300">Unsure about a specific mod?</p>
+                        <a href="https://telzenith.xyz/wiki/mods" class="text-[10px] font-black uppercase tracking-widest text-green-400 hover:text-white transition-colors flex items-center gap-2">
+                            Review Mod Policy <span class="group-hover:translate-x-1 transition-transform">→</span>
+                        </a>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-4 text-[11px] font-black text-slate-500 uppercase tracking-widest">
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5"><span class="text-red-500 text-lg">✕</span> Advantage Mods</div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5"><span class="text-red-500 text-lg">✕</span> AFK Bypassing</div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5"><span class="text-red-500 text-lg">✕</span> Baritone AI</div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="rule-card p-8 rounded-[2rem]">
+                        <span class="status-pill px-2 py-1 text-[9px] font-black uppercase mb-4 inline-block">Redstone Systems</span>
+                        <h3 class="text-xl font-bold text-white mb-3">Switch Requirements</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            All Redstone machines, clocks, and timers must be constructed with a dedicated switch or a means to return the machine to an inactive state when not in use.
+                        </p>
+                    </div>
+
+                    <div class="rule-card p-8 rounded-[2rem] border-red-500/20">
+                        <span class="status-pill severity-high px-2 py-1 text-[9px] font-black uppercase mb-4 inline-block">Exploitation</span>
+                        <h3 class="text-xl font-bold text-white mb-3">Bugs & Dupe</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Exploiting server, Minecraft, or plugin bugs for personal gain or resource duplication is forbidden. Report bugs immediately.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Protection & Combat -->
+        <section>
+            <div class="section-header">
+                <div class="section-title">
+                    <span class="section-number">03</span> Protection & Combat
+                </div>
+                <div class="section-divider"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="rule-card p-10 rounded-[2.5rem]">
+                    <h3 class="text-2xl font-bold text-white mb-4">Land Protection</h3>
+                    <p class="text-slate-400 leading-relaxed mb-6">
+                        Players are encouraged to create claims to protect their builds. Griefing within claims and server regions is strictly prohibited.
+                    </p>
+                    <div class="bg-yellow-500/10 p-6 rounded-2xl border border-yellow-500/20">
+                        <h4 class="text-yellow-500 font-black text-xs uppercase mb-2 tracking-widest">90-Day Expiry Policy</h4>
+                        <p class="text-[12px] text-slate-400 leading-relaxed">Claims expire after 90 days of inactivity. Structures will not revert but become vulnerable to looting/griefing.</p>
+                    </div>
+                </div>
+
+                <div class="rule-card p-10 rounded-[2.5rem]">
+                    <h3 class="text-2xl font-bold text-white mb-4">PvP Framework</h3>
+                    <p class="text-slate-400 leading-relaxed mb-6">
+                        Telzenith operates within a PvEvP framework. Enabling PvP through <code>/pvp</code> is voluntary. You assume all risk.
+                    </p>
+                    <div class="bg-red-500/10 p-6 rounded-2xl border border-red-500/20">
+                        <h4 class="text-red-500 font-black text-xs uppercase mb-2 tracking-widest">Death Mechanics</h4>
+                        <p class="text-[12px] text-slate-400 leading-relaxed">Dropped items are claimable. While returning items is not required, <strong>scamming someone into a PvP engagement is prohibited.</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Prohibited Trapping -->
+        <section>
+            <div class="section-header">
+                <div class="section-title">
+                    <span class="section-number">04</span> Trapping & Soft-locking
+                </div>
+                <div class="section-divider"></div>
+            </div>
+            <div class="rule-card p-10 rounded-[2.5rem]">
+                <h3 class="text-2xl font-bold text-white mb-4">Gameplay Exploitation</h3>
+                <p class="text-slate-400 leading-relaxed font-medium mb-8">
+                    Refrain from creating traps or using gameplay mechanics to soft-lock other players, making it impossible for them to escape without staff assistance.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="p-6 rounded-2xl bg-black/40 border border-white/5 hover:border-red-500/20 transition-colors">
+                        <h4 class="text-[11px] font-black text-red-400 uppercase tracking-widest mb-3">Portal Traps</h4>
+                        <p class="text-[12px] text-slate-500 leading-relaxed">Surrounding portals in blocks that prevent exit, chat interaction, or lead to immediate death (suffocation, poison, wither effect).</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-black/40 border border-white/5 hover:border-red-500/20 transition-colors">
+                        <h4 class="text-[11px] font-black text-red-400 uppercase tracking-widest mb-3">Respawn & TPA</h4>
+                        <p class="text-[12px] text-slate-500 leading-relaxed">Bed trapping players for immediate death after respawn, or using <code>/tpa</code> requests to lure and kill players.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Accounts & Economy -->
+        <section>
+            <div class="section-header">
+                <div class="section-title">
+                    <span class="section-number">05</span> Economy & Alt Accounts
+                </div>
+                <div class="section-divider"></div>
+            </div>
+            <div class="grid gap-8">
+                <!-- Alternate Accounts -->
+                <div class="rule-card p-10 rounded-[2.5rem]">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-4">
+                            <h3 class="text-2xl font-bold text-white">Alternate Accounts</h3>
+                            <span class="bg-green-500/20 text-green-400 text-[10px] font-black px-3 py-1 rounded border border-green-500/30 uppercase tracking-widest">Permitted</span>
+                        </div>
+                    </div>
+
+                    <p class="text-slate-400 leading-relaxed mb-6">
+                        Multiple accounts from the same network are handled case-by-case. <strong>Notify staff</strong> if they are separate players or alts. Alts may not be used to boost your primary account's progress or bypass server limitations.
+                    </p>
+
+                    <!-- Staff Recognition / Punishment Policy -->
+                    <div class="mb-8 p-6 rounded-2xl bg-white/5 border border-white/10">
+                        <h4 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                            Staff Recognition Policy
+                        </h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Your primary account is the one staff recognizes for all official interactions. For players utilizing alts, please be aware that <strong>punishments apply network-wide</strong>—actions taken against an alt will affect your primary account and vice versa.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-x-8 gap-y-4 text-[10px] text-slate-500 font-black uppercase tracking-widest border-t border-white/5 pt-8">
+                        <span class="flex items-center gap-3"><span class="text-red-500 text-sm">✕</span> No mob spawn boosting</span>
+                        <span class="flex items-center gap-3"><span class="text-red-500 text-sm">✕</span> No economy/bank alts</span>
+                        <span class="flex items-center gap-3"><span class="text-red-500 text-sm">✕</span> No ender chest storages</span>
+                        <span class="flex items-center gap-3"><span class="text-red-500 text-sm">✕</span> No punishment evasion</span>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- RWT Ban Card -->
+                    <div class="rule-card p-10 rounded-[2.5rem] border-l-4 border-l-red-500/50">
+                        <h3 class="text-2xl font-bold text-white mb-4">RWT Prohibition</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6 font-medium">
+                            Trading real-world currency or external goods for <strong>in-game items, currency, player accounts, or any digital assets</strong> is strictly prohibited.
+                        </p>
+                        <div class="mt-auto pt-6 border-t border-white/5 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                            <span class="text-[10px] font-black uppercase text-red-400 tracking-widest">Permanent Ban Offense</span>
+                        </div>
+                    </div>
+
+                    <!-- Services Notice Card (Updated to Warning/Yellow) -->
+                    <div class="rule-card p-10 rounded-[2.5rem] border-l-4 border-l-yellow-500/40">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-white">In-Game Services</h3>
+                            <span class="bg-yellow-500/10 text-yellow-500 text-[9px] font-black px-2 py-1 rounded border border-yellow-500/20 uppercase tracking-widest">Unmediated</span>
+                        </div>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6 font-medium">
+                            Players may provide compensation for services (e.g., <strong>map art, building, redstone engineering</strong>). Staff do not mediate these private contracts.
+                        </p>
+                        <div class="mt-auto pt-6 border-t border-white/5 flex items-center gap-3">
+                            <span class="w-2 h-2 rounded-full bg-yellow-500 shadow-[0_0_10px_rgba(234,179,8,0.3)]"></span>
+                            <span class="text-[10px] font-black uppercase text-slate-500 tracking-widest italic">Entirely at your own risk</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EULA Compliance -->
+        <div class="p-16 rounded-[4rem] bg-white/5 border border-white/5 text-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-green-500/5 blur-3xl rounded-full translate-y-1/2"></div>
+            <h3 class="text-3xl font-black mb-6 text-white relative z-10">Legal Compliance</h3>
+            <p class="text-slate-400 leading-relaxed font-medium text-base max-w-2xl mx-auto relative z-10">
+                Players are forbidden from engaging in any activity that violates <a href="https://www.minecraft.net/en-us/eula" class="text-slate-300 hover:text-green-400 transition-colors">Mojang's Terms and Conditions or the Minecraft EULA</a>. We maintain a zero-tolerance policy for activities that risk jeopardizing the server's legal standing or community safety.
+            </p>
+        </div>
+    </main>
+
+    <footer class="py-20 px-6 text-center bg-black border-t border-white/5">
+        <h2 class="text-4xl font-black tracking-[0.2em] text-slate-200 uppercase mb-2">Telzenith</h2>
+        <div class="text-slate-500 text-sm mb-10 font-medium uppercase">
+            A property of <span class="text-slate-300 hover:text-green-400 transition-colors"><a href="https://xeriscape.network/">The Xeriscape Network</a></span>
+        </div>
+        <div class="max-w-2xl mx-auto text-[10px] text-slate-600 uppercase tracking-[0.25em] opacity-60 leading-loose font-bold">
+            Minecraft is a trademark of Mojang Synergies AB.<br>Not approved by or associated with Mojang or Microsoft.
+        </div>
+    </footer>
+
+    <script>
+        const backgrounds = [
+            '/assets/images/20251015_150928.png',
+            '/assets/images/20260107_190935.png',
+            '/assets/images/20260107_200813.png',
+            '/assets/images/20260107_201528.png',
+            '/assets/images/20260107_201544.png',
+            '/assets/images/20260107_201626.png',
+            '/assets/images/20260107_202124.png',
+            '/assets/images/20260107_202301.png'
+        ];
+
+        let currentIndex = Math.floor(Math.random() * backgrounds.length);
+        let activeLayer = 1;
+
+        function cycleBackground() {
+            currentIndex = (currentIndex + 1) % backgrounds.length;
+            const nextImg = backgrounds[currentIndex];
+
+            const layer1 = document.getElementById('bg-layer-1');
+            const layer2 = document.getElementById('bg-layer-2');
+
+            if (activeLayer === 1) {
+                layer2.style.backgroundImage = `url('${nextImg}')`;
+                layer2.classList.replace('opacity-0', 'opacity-100');
+                layer1.classList.replace('opacity-100', 'opacity-0');
+                activeLayer = 2;
+            } else {
+                layer1.style.backgroundImage = `url('${nextImg}')`;
+                layer1.classList.replace('opacity-0', 'opacity-100');
+                layer2.classList.replace('opacity-100', 'opacity-0');
+                activeLayer = 1;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const initialImg = backgrounds[currentIndex];
+            document.getElementById('bg-layer-1').style.backgroundImage = `url('${initialImg}')`;
+            setInterval(cycleBackground, 7000);
+        });
+    </script>
+
+</body>
+</html>

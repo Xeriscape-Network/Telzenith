@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telzenith | Survival</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Integration -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4ade80;
+            --primary-glow: rgba(74, 222, 128, 0.4);
+            --bg-dark: #000000;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { font-family: 'Lexend', sans-serif; }
+
+        .hero-container {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Background layers for smooth crossfade */
+        .hero-layer {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            transition: opacity 1.5s ease-in-out;
+            z-index: 1;
+        }
+
+        .hero-layer::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.9) 100%);
+        }
+
+        .hero-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 25vh;
+            background: linear-gradient(to top, var(--bg-dark), transparent);
+            z-index: 3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, rgba(25, 25, 25, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        }
+
+        .card-vanilla:hover { border-color: #4ade80; box-shadow: 0 0 30px rgba(74, 222, 128, 0.15); }
+        .card-skills:hover { border-color: #60a5fa; box-shadow: 0 0 30px rgba(96, 165, 250, 0.15); }
+        .card-economy:hover { border-color: #fbbf24; box-shadow: 0 0 30px rgba(251, 191, 36, 0.15); }
+        .card-claims:hover { border-color: #f87171; box-shadow: 0 0 30px rgba(248, 113, 113, 0.15); }
+
+        .feature-card:hover { transform: translateY(-10px); }
+
+        .text-shadow {
+            text-shadow: 0 4px 12px rgba(0,0,0,0.9);
+        }
+
+        #copy-toast {
+            visibility: hidden;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .edition-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+        }
+
+        .pvp-gradient {
+            background: linear-gradient(to right, rgba(239, 68, 68, 0.1), transparent);
+            border-left: 4px solid #ef4444;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <header class="hero-container text-center px-4">
+        <!-- Layering for Background Fade -->
+        <div id="bg-layer-1" class="hero-layer opacity-100"></div>
+        <div id="bg-layer-2" class="hero-layer opacity-0"></div>
+
+        <div class="hero-content max-w-5xl">
+            <h1 class="text-7xl md:text-[9.5rem] font-black mb-6 tracking-tighter text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.6)]">
+                TEL<span class="text-green-400">ZENITH</span>
+            </h1>
+
+            <p class="text-slate-100 text-xl md:text-3xl mb-12 max-w-5xl mx-auto font-bold text-shadow leading-relaxed uppercase tracking-wide">
+                Survival enhanced for a modern community
+            </p>
+
+            <div class="flex flex-col items-center gap-6">
+                <!-- IP Interaction Card -->
+                <div class="flex flex-col md:flex-row items-stretch bg-black/90 backdrop-blur-xl rounded-2xl border-2 border-white/10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)] overflow-hidden group">
+                    <div class="px-10 py-6 flex flex-col justify-center text-left border-b md:border-b-0 md:border-r border-white/5">
+                        <span class="font-mono text-2xl md:text-3xl text-white tracking-tight">telzenith.xyz</span>
+                    </div>
+                    <button onclick="copyIP()" class="bg-green-500 hover:bg-green-400 text-black px-12 py-6 font-black text-lg transition-all flex items-center justify-center gap-3 transform active:scale-95">
+                        <i class="fa-solid fa-copy text-xl"></i>
+                        JOIN NOW
+                    </button>
+                </div>
+                <!-- Badges -->
+                <div class="flex gap-3">
+                    <span class="edition-badge px-5 py-2 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] text-slate-300">Java Edition</span>
+                    <span class="edition-badge px-5 py-2 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] text-slate-300">Bedrock Edition</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10 bg-black">
+        <!-- Highlights -->
+        <section class="py-24 px-6 max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Vanilla+ Card -->
+                <div class="feature-card card-vanilla p-8 rounded-3xl flex flex-col">
+                    <div class="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-green-400/10 text-green-400">
+                        <i class="fa-solid fa-leaf text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Vanilla+ Feel</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed font-medium mb-8">Balanced additions that maintain the spirit of survival.</p>
+                    <ul class="space-y-3 mt-auto border-t border-white/5 pt-6">
+                        <li class="flex items-center gap-3 text-[13px] text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-green-400 shadow-[0_0_8px_#4ade80]"></span> Modern Datapacks
+                        </li>
+                        <li class="flex items-center gap-3 text-[13px] text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-green-400 shadow-[0_0_8px_#4ade80]"></span> Custom Recipes
+                        </li>
+                        <li class="flex items-center gap-3 text-[13px] text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-green-400 shadow-[0_0_8px_#4ade80]"></span> Server-Side Quality
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Skills & Jobs Card -->
+                <div class="feature-card card-skills p-8 rounded-3xl flex flex-col">
+                    <div class="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-400/10 text-blue-400">
+                        <i class="fa-solid fa-bolt text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Skills & Jobs</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed font-medium mb-8">Level up your skills, unlock new benefits, and earn a steady living.</p>
+                    <ul class="space-y-3 mt-auto border-t border-white/5 pt-6">
+                        <li class="flex items-center gap-3 text-[13px] text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_#60a5fa]"></span> McMMO Passive Skills
+                        </li>
+                        <li class="flex items-center gap-3 text-[13px] text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_#60a5fa]"></span> Diverse Career Jobs
+                        </li>
+                        <li class="flex items-center gap-3 text-[13px] text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_#60a5fa]"></span> Growth Progression
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Economy Card -->
+                <div class="feature-card card-economy p-8 rounded-3xl flex flex-col">
+                    <div class="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-amber-400/10 text-amber-400">
+                        <i class="fa-solid fa-coins text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Economy</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed font-medium mb-8">Stable, player-driven marketplace and wealth systems.</p>
+                    <ul class="space-y-3 mt-auto border-t border-white/5 pt-6">
+                        <li class="flex items-center gap-3 text-[13px] text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24]"></span> Global Auction House
+                        </li>
+                        <li class="flex items-center gap-3 text-[13px] text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24]"></span> Chest Shop System
+                        </li>
+                        <li class="flex items-center gap-3 text-[13px] text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24]"></span> Money Marketplace
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Claims Card -->
+                <div class="feature-card card-claims p-8 rounded-3xl flex flex-col">
+                    <div class="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-red-400/10 text-red-400">
+                        <i class="fa-solid fa-shield-halved text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Land Protection</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed font-medium mb-8">Build with peace of mind using our robust claiming system.</p>
+                    <ul class="space-y-3 mt-auto border-t border-white/5 pt-6">
+                        <li class="flex items-center gap-3 text-[13px] text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-red-400 shadow-[0_0_8px_#f87171]"></span> Land Claiming
+                        </li>
+                        <li class="flex items-center gap-3 text-[13px] text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-red-400 shadow-[0_0_8px_#f87171]"></span> Grief Prevention
+                        </li>
+                        <li class="flex items-center gap-3 text-[13px] text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-red-400 shadow-[0_0_8px_#f87171]"></span> Trust Management
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Playstyles Section -->
+        <section class="py-12 px-6 max-w-7xl mx-auto">
+            <div class="mb-12">
+                <h2 class="text-4xl font-black mb-4">Choose Your <span class="text-green-400">Playstyle</span></h2>
+                <p class="text-slate-400 max-w-2xl font-medium">Whether you're looking for solitude or a thriving community,<br>Telzenith is designed to support how <span class="text-white">you</span> want to play.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <!-- Lone Wolf -->
+                <div class="p-10 rounded-[2.5rem] bg-neutral-900/30 border border-white/5 hover:border-white/10 transition-colors">
+                    <h3 class="text-2xl font-black mb-4 flex items-center gap-3 text-white">
+                        <span class="text-slate-500">01</span> The Lone Wolf
+                    </h3>
+                    <p class="text-slate-400 leading-relaxed font-medium">
+                        Prefer to survive on your own? Build hidden bases, master solo skills, and conquer the wilderness at your own pace. The world is vast enough for you to find your own slice of peace without the noise.
+                    </p>
+                </div>
+                <!-- Strength in Numbers -->
+                <div class="p-10 rounded-[2.5rem] bg-neutral-900/30 border border-white/5 hover:border-white/10 transition-colors">
+                    <h3 class="text-2xl font-black mb-4 flex items-center gap-3 text-white">
+                        <span class="text-slate-500">02</span> Strength in Numbers
+                    </h3>
+                    <p class="text-slate-400 leading-relaxed font-medium">
+                        Survival is always more fun with friends. Establish shared bases with your group and collaborate on build projects together, with team management made simple.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Opt-In PvP Highlight -->
+            <div class="pvp-gradient p-10 md:p-12 rounded-[2.5rem] bg-neutral-900/40">
+                <div class="flex flex-col md:flex-row md:items-center gap-8">
+                    <div class="flex-1">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-[10px] font-black uppercase tracking-widest mb-4">
+                            Combat System
+                        </div>
+                        <h3 class="text-3xl font-black mb-4 text-white">Opt-In PvP Action</h3>
+                        <p class="text-slate-400 leading-relaxed font-medium text-lg">
+                            We believe in player agency. PvP is strictly <span class="text-white">opt-in</span>. Engage in thrilling combat only with other players who have also chosen to enable it. Whether you're a pacifist architect or a hardened warrior, you control your experience.
+                        </p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div class="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-red-500/20 flex items-center justify-center text-red-500">
+                            <!-- Restored High-Quality SVG Swords -->
+                            <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 20l-1-1L5 14l-2 2V3h13l-2 2-5 5-1 1M13 4l1 1 5 5 2-2V21H8l2-2 5-5 1-1"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources & Community -->
+        <section class="py-24 px-6 max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-10">
+                <!-- Discord -->
+                <div class="p-12 rounded-[2.5rem] bg-neutral-900/40 border border-white/10 shadow-2xl relative overflow-hidden group">
+                    <h3 class="text-3xl font-black mb-6 text-white">Community Discord</h3>
+                    <p class="text-slate-300 text-lg mb-8 leading-relaxed">
+                        Stay in touch with the community wherever you are. Our server chat is <strong>fully bridged with Discord</strong>, syncing messages in real time so conversations never miss a beat.
+                    </p>
+                    <a href="#" class="inline-flex items-center gap-3 bg-[#5865F2] hover:bg-[#4752c4] text-white px-8 py-4 rounded-2xl font-black text-lg transition-all hover:-translate-y-1">
+                        Join Discord
+                    </a>
+                </div>
+
+                <!-- Wiki -->
+                <div class="p-12 rounded-[2.5rem] bg-neutral-900/40 border border-white/10 shadow-2xl relative overflow-hidden group">
+                    <h3 class="text-3xl font-black mb-6 text-white">Server Wiki</h3>
+                    <p class="text-slate-300 text-lg mb-8 leading-relaxed">
+                        Need help getting started with the <strong>claim system</strong>, or want to review the rules? Our documentation covers the basics and everything you need to get up and running.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://telzenith.xyz/wiki" target="_blank" class="inline-flex items-center gap-3 bg-white text-black hover:bg-slate-200 px-8 py-4 rounded-2xl font-black text-lg transition-all hover:-translate-y-1">
+                            View Documentation
+                        </a>
+                        <a href="/rules" class="inline-flex items-center gap-3 bg-white/5 border border-white/10 text-white hover:bg-white/10 px-8 py-4 rounded-2xl font-black text-lg transition-all hover:-translate-y-1">
+                            Server Rules
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-20 px-6 text-center bg-black border-t border-white/5">
+        <h2 class="text-4xl font-black tracking-[0.2em] text-slate-200 uppercase mb-2">Telzenith</h2>
+        <div class="text-slate-500 text-sm mb-10 font-medium uppercase">
+            A property of <span class="text-slate-300 hover:text-green-400 transition-colors"><a href="https://xeriscape.network/">The Xeriscape Network</a></span>
+        </div>
+        <div class="max-w-2xl mx-auto text-[10px] text-slate-600 uppercase tracking-[0.25em] opacity-60 leading-loose font-bold">
+            Minecraft is a trademark of Mojang Synergies AB.<br>Not approved by or associated with Mojang or Microsoft.
+        </div>
+    </footer>
+
+    <div id="copy-toast" class="bg-green-500 text-black px-8 py-4 rounded-2xl font-black shadow-[0_0_30px_rgba(74,222,128,0.5)] animate-bounce">
+        ✓ IP COPIED!
+    </div>
+
+    <script>
+        const backgrounds = [
+            'assets/images/20251015_150928.png',
+            'assets/images/20260107_190935.png',
+            'assets/images/20260107_200813.png',
+            'assets/images/20260107_201528.png',
+            'assets/images/20260107_201544.png',
+            'assets/images/20260107_201626.png',
+            'assets/images/20260107_202124.png',
+            'assets/images/20260107_202301.png'
+        ];
+
+        let currentIndex = Math.floor(Math.random() * backgrounds.length);
+        let activeLayer = 1;
+
+        function cycleBackground() {
+            currentIndex = (currentIndex + 1) % backgrounds.length;
+            const nextImg = backgrounds[currentIndex];
+            const layer1 = document.getElementById('bg-layer-1');
+            const layer2 = document.getElementById('bg-layer-2');
+
+            if (activeLayer === 1) {
+                layer2.style.backgroundImage = `url('${nextImg}')`;
+                layer2.classList.replace('opacity-0', 'opacity-100');
+                layer1.classList.replace('opacity-100', 'opacity-0');
+                activeLayer = 2;
+            } else {
+                layer1.style.backgroundImage = `url('${nextImg}')`;
+                layer1.classList.replace('opacity-0', 'opacity-100');
+                layer2.classList.replace('opacity-100', 'opacity-0');
+                activeLayer = 1;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const initialImg = backgrounds[currentIndex];
+            document.getElementById('bg-layer-1').style.backgroundImage = `url('${initialImg}')`;
+            setInterval(cycleBackground, 7000);
+        });
+
+        function copyIP() {
+            const ip = "telzenith.xyz";
+            const el = document.createElement('textarea');
+            el.value = ip;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            const toast = document.getElementById('copy-toast');
+            toast.style.visibility = 'visible';
+            setTimeout(() => {
+                toast.style.visibility = 'hidden';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
