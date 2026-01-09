@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Define baseURL for website -->
+    <!-- Define BaseURL -->
     <base href="https://telzenith.xyz/">
+
+    <!-- Define Favicon -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
 
     <!-- Primary Meta Tags -->
     <title>Telzenith :: Rules</title>
@@ -72,7 +75,7 @@
             height: 100%;
             z-index: -1;
             background:
-                linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.9) 100%),
+                linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%),
                 radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);
         }
 
@@ -225,11 +228,11 @@
                 <!-- Fraud & Scamming -->
                 <div class="rule-card p-10 rounded-[2.5rem]">
                     <div class="flex items-center gap-3 mb-4">
-                        <span class="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.5)]"></span>
+                        <!-- <span class="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.5)]"></span> -->
                         <h3 class="text-xl font-bold text-white">Fraud & Deception</h3>
                     </div>
                     <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                        Scamming other players out of their items, currency, or progress is not permitted. This includes fraudulent trades, "betting" schemes without payout, or using social engineering to steal assets. Telzenith is a community, not an anarchy environment.
+                        Scamming other players out of their items, currency, or progress is not permitted. This includes fraudulent trades, "betting" schemes without payout, or using social engineering to steal assets.<br><br>Telzenith is a community, not an anarchy environment.
                     </p>
                     <div class="flex flex-wrap gap-x-6 gap-y-2 text-[10px] font-black text-slate-500 uppercase tracking-widest italic opacity-70">
                         <span>• No Trade Scams</span>
@@ -241,7 +244,7 @@
                 <!-- Integrity Rule -->
                 <div class="rule-card p-10 rounded-[2.5rem] border-l-4 border-l-yellow-500/40">
                     <div class="flex items-center gap-3 mb-4">
-                        <span class="w-2 h-2 rounded-full bg-yellow-500 shadow-[0_0_10px_rgba(234,179,8,0.5)]"></span>
+                        <!-- <span class="w-2 h-2 rounded-full bg-yellow-500 shadow-[0_0_10px_rgba(234,179,8,0.5)]"></span> -->
                         <h3 class="text-xl font-bold text-white">Server Integrity</h3>
                     </div>
                     <p class="text-slate-400 text-sm leading-relaxed">
@@ -284,15 +287,15 @@
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="rule-card p-8 rounded-[2rem]">
                         <span class="status-pill px-2 py-1 text-[9px] font-black uppercase mb-4 inline-block">Redstone Systems</span>
-                        <h3 class="text-xl font-bold text-white mb-3">Switch Requirements</h3>
+                        <h3 class="text-xl font-bold text-white mb-3">Redstone Requirements</h3>
                         <p class="text-slate-400 text-sm leading-relaxed">
-                            All Redstone machines, clocks, and timers must be constructed with a dedicated switch or a means to return the machine to an inactive state when not in use.
+                            All Redstone machines, clocks, and timers must be constructed with a switch or a means to return the machine to an inactive state when not in use.
                         </p>
                     </div>
 
                     <div class="rule-card p-8 rounded-[2rem] border-red-500/20">
                         <span class="status-pill severity-high px-2 py-1 text-[9px] font-black uppercase mb-4 inline-block">Exploitation</span>
-                        <h3 class="text-xl font-bold text-white mb-3">Bugs & Dupe</h3>
+                        <h3 class="text-xl font-bold text-white mb-3">Bugs & Dupe Exploits</h3>
                         <p class="text-slate-400 text-sm leading-relaxed">
                             Exploiting server, Minecraft, or plugin bugs for personal gain or resource duplication is forbidden. Report bugs immediately.
                         </p>
@@ -324,7 +327,7 @@
                 <div class="rule-card p-10 rounded-[2.5rem]">
                     <h3 class="text-2xl font-bold text-white mb-4">PvP Framework</h3>
                     <p class="text-slate-400 leading-relaxed mb-6">
-                        Telzenith operates within a PvEvP framework. Enabling PvP through <code>/pvp</code> is voluntary. You assume all risk.
+                        Telzenith operates within a PvEvP framework. Enabling PvP through <code>/pvp</code> is voluntary decision; You assume all risk.
                     </p>
                     <div class="bg-red-500/10 p-6 rounded-2xl border border-red-500/20">
                         <h4 class="text-red-500 font-black text-xs uppercase mb-2 tracking-widest">Death Mechanics</h4>
@@ -408,10 +411,10 @@
                         <p class="text-slate-400 text-sm leading-relaxed mb-6 font-medium">
                             Trading real-world currency or external goods for <strong>in-game items, currency, player accounts, or any digital assets</strong> is strictly prohibited.
                         </p>
-                        <div class="mt-auto pt-6 border-t border-white/5 flex items-center gap-2">
+                        <!-- <div class="mt-auto pt-6 border-t border-white/5 flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
                             <span class="text-[10px] font-black uppercase text-red-400 tracking-widest">Permanent Ban Offense</span>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Services Notice Card (Updated to Warning/Yellow) -->
@@ -423,17 +426,17 @@
                         <p class="text-slate-400 text-sm leading-relaxed mb-6 font-medium">
                             Players may provide compensation for services (e.g., <strong>map art, building, redstone engineering</strong>). Staff do not mediate these private contracts.
                         </p>
-                        <div class="mt-auto pt-6 border-t border-white/5 flex items-center gap-3">
+                        <!-- <div class="mt-auto pt-6 border-t border-white/5 flex items-center gap-3">
                             <span class="w-2 h-2 rounded-full bg-yellow-500 shadow-[0_0_10px_rgba(234,179,8,0.3)]"></span>
                             <span class="text-[10px] font-black uppercase text-slate-500 tracking-widest italic">Entirely at your own risk</span>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- EULA Compliance -->
-        <div class="p-16 rounded-[4rem] bg-white/5 border border-white/5 text-center relative overflow-hidden">
+        <div class="p-16 rounded-[4rem] bg-white/5 border border-white/5 text-center relative overflow-hidden backdrop-blur-3xl">
             <div class="absolute inset-0 bg-green-500/5 blur-3xl rounded-full translate-y-1/2"></div>
             <h3 class="text-3xl font-black mb-6 text-white relative z-10">Legal Compliance</h3>
             <p class="text-slate-400 leading-relaxed font-medium text-base max-w-2xl mx-auto relative z-10">
